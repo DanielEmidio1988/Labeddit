@@ -1,4 +1,4 @@
-import { db } from "../database/Knex"
+// import { db } from "../database/Knex"
 import { PostDatabase } from "../database/PostDatabase"
 import { UserDatabase } from "../database/UserDatabase"
 import { PostDB, ROLE_USER } from "../types"
@@ -39,6 +39,7 @@ export class PostBusiness {
             const post = new Post (
                 postDB.id,
                 postDB.content,
+                postDB.comments,
                 postDB.likes,
                 postDB.dislikes,
                 postDB.created_at,
@@ -80,6 +81,7 @@ export class PostBusiness {
         const id = this.idGenerator.generate()
         const created_at = (new Date()).toISOString()
         const updated_at = (new Date()).toISOString()
+        const comments = 0
         const likes = 0
         const dislikes = 0
         const creator_id = payload.id
@@ -95,6 +97,7 @@ export class PostBusiness {
         const newPost = new Post (
             id,
             content,
+            comments,
             likes,
             dislikes,
             created_at,
@@ -152,6 +155,7 @@ export class PostBusiness {
         const postToUpdate = new Post(
             id,
             content,
+            filterPostToUpdate.comments,
             filterPostToUpdate.likes,
             filterPostToUpdate.dislikes,
             filterPostToUpdate.created_at,
@@ -248,6 +252,7 @@ export class PostBusiness {
         const postToLike = new Post(
             id,
             filterPostToLike.content,
+            filterPostToLike.comments,
             likes,
             dislikes,
             filterPostToLike.created_at,

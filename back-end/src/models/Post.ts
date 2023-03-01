@@ -4,6 +4,7 @@ export class Post {
     constructor(
         private id: string,
         private content: string,
+        private comments: number,
         private likes: number,
         private dislikes: number,
         private created_at: string,
@@ -18,6 +19,7 @@ export class Post {
         return {
             id:this.id,
             creator_id: this.creator.id,
+            comments: this.comments,
             content: this.content,
             likes: this.likes,
             dislikes: this.dislikes,
@@ -38,6 +40,7 @@ export class Post {
         return{
             id: this.id,
             content: this.content,
+            comments: this.comments,
             likes: this.likes,
             dislikes: this.dislikes,
             created_at: this.created_at,
@@ -60,6 +63,14 @@ export class Post {
 
     public setContent(value:string){
         this.content = value
+    }
+
+    public getComments():number{
+        return this.comments
+    }
+
+    public setComments(value:number){
+        this.comments = value
     }
 
     public getLikes():number{
