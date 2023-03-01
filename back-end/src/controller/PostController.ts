@@ -1,5 +1,5 @@
 import { PostDB } from "../types"
-import { db } from "../database/Knex"
+// import { db } from "../database/Knex"
 import { Request,Response } from "express"
 import { PostBusiness } from "../business/PostBusiness"
 import { PostDTO } from "../dtos/PostDTO"

@@ -16,6 +16,7 @@ export interface PostDB{
     id: string,
     creator_id: string,
     content: string,
+    comments: number,
     likes: number,
     dislikes: number,
     created_at: string,
@@ -25,6 +26,7 @@ export interface PostDB{
 export interface PostbyUsersDB{
     id: string,
     content: string,
+    comments: number,
     likes: number,
     dislikes: number,
     created_at: string,
@@ -34,6 +36,8 @@ export interface PostbyUsersDB{
         name: string,
     }
 }
+
+// export interface 
 
 export interface LikeDislikeDB{
     user_id: string,
