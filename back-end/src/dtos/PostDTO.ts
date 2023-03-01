@@ -2,8 +2,19 @@ export interface GetAllPostsInputDTO{
     q: string,
     token: string,
 }
+
+export interface GetPostsInputDTO{
+    id: string,
+    token: string,
+}
     
     export interface InsertInputPostDTO{
+        content: string,
+        token: string,
+    }
+
+    export interface InsertInputCommentDTO{
+        id_post: string,
         content: string,
         token: string,
     }
@@ -35,9 +46,28 @@ export interface GetAllPostsInputDTO{
         return result
     }
 
+    getPostInput = (id:string, token:string):GetPostsInputDTO=>{
+        const result:GetPostsInputDTO={
+            id,
+            token
+        }
+        return result
+    }
+
     insertInputPost = (content: string, token: string) :InsertInputPostDTO =>{
 
         const result: InsertInputPostDTO={
+            content,
+            token,
+        }
+
+        return result
+    }
+
+    InsertInputComment = (id_post:string, content: string, token: string) :InsertInputCommentDTO =>{
+
+        const result: InsertInputCommentDTO={
+            id_post,
             content,
             token,
         }
@@ -75,6 +105,5 @@ export interface GetAllPostsInputDTO{
 
         return result
     }
-
     
    } 

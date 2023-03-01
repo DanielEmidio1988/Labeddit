@@ -1,4 +1,4 @@
-import { PostbyUsersDB, PostDB, UserDB, LikeDislikeDB } from "../types";
+import { PostbyUsersDB, PostWithCommentsDB, PostDB, CommentDB, UserDB, LikeDislikeDB} from "../types";
 
 export class Post {
     constructor(
@@ -11,8 +11,9 @@ export class Post {
         private updated_at: string,
         private creator: {
             id: string,
-            name: string,
-        }
+            username: string,
+        },
+        private comments_post: CommentDB,
     ){}
 
     public toDBModel(): PostDB{
@@ -20,6 +21,19 @@ export class Post {
             id:this.id,
             creator_id: this.creator.id,
             comments: this.comments,
+            content: this.content,
+            likes: this.likes,
+            dislikes: this.dislikes,
+            created_at: this.created_at,
+            updated_at: this.updated_at,        
+        }
+    }
+
+    public toDBCommentModel(): CommentDB{
+        return {
+            id:this.id,
+            creator_id: this.creator.id,
+            post_id: this.comments_post.post_id,
             content: this.content,
             likes: this.likes,
             dislikes: this.dislikes,
@@ -46,6 +60,20 @@ export class Post {
             created_at: this.created_at,
             updated_at: this.updated_at,
             creator: this.creator,
+        }
+    }
+
+    public toBusinessCommentsModel():PostWithCommentsDB{
+        return{
+            id: this.id,
+            content: this.content,
+            comments: this.comments,
+            likes: this.likes,
+            dislikes: this.dislikes,
+            created_at: this.created_at,
+            updated_at: this.updated_at,
+            creator: this.creator,
+            comments_post: this.comments_post
         }
     }
 
@@ -107,14 +135,14 @@ export class Post {
 
     public getCreator():{
         id: string,
-        name: string,
+        username: string,
     }{
         return this.creator
     }
 
     public setCreator(value:{
         id: string,
-        name: string,
+        username: string,
     }){
         this.creator = value
     }
