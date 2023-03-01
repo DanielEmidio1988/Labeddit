@@ -23,8 +23,14 @@ const postController = new PostController(
 //Daniel: endpoint para buscar todos os posts
 postRouter.get("/", postController.getPosts)
 
+//Daniel: endpoint para buscar um post por ID
+postRouter.get("/:id", postController.getPostsbyId)
+
 //Daniel: endpoint para inserir novo post
 postRouter.post("/", postController.insertNewPost)
+
+//Daniel: endpoint para inserir novo comentário
+postRouter.post("/:id", postController.insertNewComment)
 
 //Daniel: endpoint para atualizar um post
 postRouter.put("/:id", postController.updatePost)
@@ -34,3 +40,6 @@ postRouter.delete("/:id", postController.deletePost)
 
 //Daniel: endpoint like/dislike
 postRouter.put("/:id/like", postController.likeDislike)
+
+// //Daniel: endpoint like/dislike comentários
+// postRouter.put("/:id/:cid/like", postController.likeDislikeComment)

@@ -3,6 +3,7 @@ import cors from 'cors'
 import dotenv from 'dotenv'
 import { postRouter } from './routes/postRouter';
 import { userRouter } from './routes/userRouter';
+// import { commentRouter } from './routes/commentRouter';
 
 dotenv.config()
 
@@ -17,4 +18,5 @@ app.listen(local,()=>{
     console.log(`Servidor iniciado na porta ${local}`)})
 
 app.use("/posts", postRouter)
+// app.use("/comments",commentRouter)
 app.use("/users", userRouter)

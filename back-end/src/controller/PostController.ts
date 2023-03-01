@@ -39,6 +39,34 @@ export class PostController{
         }
     }
 
+    public getPostsbyId = async(req:Request, res:Response)=>{
+        try {
+
+            const input ={
+                id:req.params.id as string | undefined,
+                token: req.headers.authorization
+            }  
+            
+
+            const output = await this.postBusiness.getPostsById(input)
+
+            res.status(201).send(output)   
+                      
+        } catch (error) {
+            console.log(error)
+        
+            if (req.statusCode === 200) {
+                res.status(500)
+            }
+    
+            if (error instanceof Error) {
+                res.send(error.message)
+            } else {
+                res.send("Erro inesperado")
+            }  
+        }
+    }
+
     public insertNewPost = async(req:Request, res:Response)=>{
         try {
                 
@@ -48,6 +76,34 @@ export class PostController{
             const input = this.postDTO.insertInputPost(content, token)
 
             const output = await this.postBusiness.insertNewPost(input)
+            
+            res.status(200).send(output)
+    
+        } catch (error) {
+            console.log(error)
+        
+            if (req.statusCode === 200) {
+                res.status(500)
+            }
+    
+            if (error instanceof Error) {
+                res.send(error.message)
+            } else {
+                res.send("Erro inesperado")
+            }  
+        }
+    }
+
+    public insertNewComment = async(req:Request, res:Response)=>{
+        try {
+
+        const id = req.params.id        
+        const content = req.body.content
+        const token = req.headers.authorization
+
+            const input = this.postDTO.InsertInputComment(id, content, token)
+
+            const output = await this.postBusiness.insertNewComment(input)
             
             res.status(200).send(output)
     
