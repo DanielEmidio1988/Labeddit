@@ -40,6 +40,3 @@ postRouter.delete("/:id", postController.deletePost)
 
 //Daniel: endpoint like/dislike
 postRouter.put("/:id/like", postController.likeDislike)
-
-// //Daniel: endpoint like/dislike comentários
-// postRouter.put("/:id/:cid/like", postController.likeDislikeComment)
