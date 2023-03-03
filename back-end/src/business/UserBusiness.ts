@@ -120,14 +120,20 @@ export class UserBusiness{
             throw new BadRequestError("Favor, informar o 'password'")
         }
 
+
         const searchUserByLogin = await this.userDatabase.getUserByEmail(email)
 
         if(!searchUserByLogin){
             throw new NotFoundError("'E-mail' não cadastrado!")
         }
-        const passwordHash = this.hashManager.compare(password, searchUserByLogin.password)
+
+        // 
+        const passwordHash = await this.hashManager.compare(password, searchUserByLogin.password)
 
         if(!passwordHash){
+            console.log("busca", searchUserByLogin.password)
+            console.log("pass", password)
+            console.log("Hash", passwordHash)
             throw new BadRequestError("'e-mail' ou 'senha' inválidos") 
         }
 
