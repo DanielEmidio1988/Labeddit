@@ -1,11 +1,35 @@
 import logo from "../../assets/logoBig.svg"
+import axios from "axios"
 // import { MainSection } from "./styleLoginPage"
 import { StyleMain, StyleSectionLoginSignup } from "../../constants/stylePages"
 import { goToSignUpPage, goToHomePage } from "../../router/coordinator"
 import { useNavigate } from "react-router-dom"
+import { useContext, useState } from "react"
+import {GlobalContext} from "../../context/GlobalContext"
+import { BASE_URL } from "../../constants/BASE_URL"
 
 function LoginPage(){
     const navigate = useNavigate()
+    const [form, setForm] = useState({email:'',password:''})
+
+    const onChangeForm = (event) => {
+        setForm({ ...form, [event.target.name]: event.target.value })
+    }
+
+    const loginUser = async ()=>{
+        try {
+            let body ={
+                email: form.email,
+                password: form.password,
+            }
+            const response = await axios.post(`${BASE_URL}/users/login`, body)
+            console.log("response", response)
+            goToHomePage(navigate)
+        } catch (error) {
+            console.log(error)
+            //Daniel: criar modal com o status 404 (senha incorreta)
+        }
+    }
 
     return(
         <>
@@ -16,11 +40,11 @@ function LoginPage(){
                     <h3>O projeto de rede social da Labenu</h3>
                 </div>
                 <div>
-                    <input placeholder="E-mail"/>
-                    <input type="password" placeholder="Senha"/>
+                    <input value={form.email} name="email" onChange={onChangeForm} placeholder="E-mail"/>
+                    <input value={form.password} name="password" onChange={onChangeForm} type="password" placeholder="Senha"/>
                 </div>
                 <div>
-                    <button onClick={()=>goToHomePage(navigate)}>Continuar</button>
+                    <button onClick={()=>loginUser()}>Continuar</button>
                     <button onClick={()=>goToSignUpPage(navigate)} className="signUpButton">Crie uma conta</button>
                 </div>
             </StyleSectionLoginSignup>

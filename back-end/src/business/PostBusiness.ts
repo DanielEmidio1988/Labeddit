@@ -341,6 +341,11 @@ export class PostBusiness {
         }
 
         const filterPostToDelete = await this.postDatabase.getPostById(id)
+
+        if(!filterPostToDelete){
+            throw new BadRequestError("Publicação não encontrada")
+        }
+
         const filterUserDB = await this.userDatabase.getUserById(filterPostToDelete.creator_id)
 
         if(filterUserDB.role !== ROLE_USER.ADMIN){
@@ -348,16 +353,19 @@ export class PostBusiness {
                 throw new BadRequestError("Você não possui autorização para realizar esta operação")
             }
         }
-    
-        if(filterPostToDelete){
-            await this.postDatabase.deletePostbyId(id)
-            const output = {
-                message: "Publicação excluida com sucesso",
-                post: filterPostToDelete}
-            return output
-        }else{
-            throw new BadRequestError("Publicação não encontrada")
-        }
+
+        // const filterPostById = await this.postDatabase.getPostById(id)
+
+        // if(!filterPostById){
+        //     throw new BadRequestError("'Post' não localizado")
+        // }
+
+        await this.postDatabase.deletePostbyId(id)
+        const output = {
+            message: "Publicação excluida com sucesso",
+            post: filterPostToDelete}
+        return output
+
     }
 
     public likeDislike = async (input: LikeDislikeDTO)=>{

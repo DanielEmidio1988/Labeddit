@@ -1,23 +1,20 @@
 import Header from "../../components/Header/Header"
 import { StyleMain, StyleSection } from "../../constants/stylePages"
-import like from "../../assets/like.svg"
-import dislike from "../../assets/dislike.svg"
-import coment from "../../assets/coment.svg"
+// import like from "../../assets/like.svg"
+// import dislike from "../../assets/dislike.svg"
+// import coment from "../../assets/coment.svg"
 import { useContext } from "react"
 import {GlobalContext} from "../../context/GlobalContext"
 import { useParams } from "react-router-dom"
 import ModalPost from "../../components/ModalPost/ModalPost"
+import PostCard from "../../components/PostCard/PostCard"
 
 function HomePage(){
 
     const context = useContext(GlobalContext)
     const params = useParams()
 
-    const showPost = ()=>{
-        context.setModal(true)
-        context.setActionModal("post")
-    }
-
+    console.log(context.posts)
     return(
         <>
             {context.modal ? 
@@ -40,7 +37,11 @@ function HomePage(){
                         <button>Postar</button>
                     </div>
                     <div>
-                        <article>
+                        {context.posts && context.posts.map((post)=> {return(
+                            <PostCard
+                            post={post}/>
+                        )})}
+                        {/* <article>
                             <p className="subText">Enviado por: Fulano</p>
                             <p>Porque a maioria dos desenvolvedores usam Linux? ou as empresas de tecnologia usam Linux ?</p>
                             <p className="menuPost">
@@ -54,7 +55,7 @@ function HomePage(){
                                     50
                                 </span>
                             </p>
-                        </article>
+                        </article> */}
                     </div>
                 </StyleSection>
             </StyleMain>
