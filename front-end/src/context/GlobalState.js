@@ -10,6 +10,9 @@ function GlobalState(){
     //Daniel: armazenar informações de publicações
     const [posts, setPosts] = useState([])
 
+    //Daniel: armazenar endereço de uma unica publicação
+    const [urlPost, setUrlPost] = useState('')
+
     //Daniel: controlar exibição de modais
     const [modal, setModal] = useState(false)
 
@@ -36,6 +39,9 @@ function GlobalState(){
 
     return{
         posts,
+        setPosts,
+        urlPost, 
+        setUrlPost,
         modal, 
         setModal,
         actionModal, 

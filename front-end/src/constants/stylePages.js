@@ -83,6 +83,7 @@ export const StyleSection = styled.section`
 
         article{
             display: flex;
+            width: 100%;
             gap: 18px;
             padding: 9px 10px;
             flex-direction: column;
