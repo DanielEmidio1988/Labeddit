@@ -1,11 +1,54 @@
 import Header from "../../components/Header/Header"
-// import { StyleMain, StyleSection } from "../../constants/stylePages"
+import axios from "axios"
+import { useContext } from "react"
+import {GlobalContext} from "../../context/GlobalContext"
 import { StyleContainerModal, StyleSection } from "./styleModalPost"
 import like from "../../assets/like.svg"
 import dislike from "../../assets/dislike.svg"
 import coment from "../../assets/coment.svg"
+import { useEffect, useState } from "react"
+import { BASE_URL } from "../../constants/BASE_URL"
 
 function ModalPost(){
+
+    const context = useContext(GlobalContext)
+    const [post, setPost] = useState({})
+    const [content, setContent] = useState('')
+
+    useEffect(()=>{
+        browserPost()
+    },
+    [context.urlPost, context.posts])
+
+    //Daniel: renderizar publicação individual
+    const browserPost = async()=>{
+        try {
+            let aux = ''
+            const response = await axios.get(`${BASE_URL}/posts/${context.urlPost}`,{
+                headers:{
+                    Authorization:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InUwMDEiLCJ1c2VybmFtZSI6IkRhbmllbCIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTY3Nzg0NjQzMiwiZXhwIjoxNjc3OTMyODMyfQ.3oiSSQhgE4Q-twjcQpEoFlRUpOiFsjPovmxnPt-e3JU'
+                }})
+            console.log("modal", response.data[0])
+            aux = response.data[0]
+            setPost(aux)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const insertNewComment = async () =>{
+        try {          
+            let body = {
+                content,
+            }
+            await axios.post(`${BASE_URL}/posts/${context.urlPost}`,body,{
+                headers:{Authorization:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InUwMDEiLCJ1c2VybmFtZSI6IkRhbmllbCIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTY3Nzg0NjQzMiwiZXhwIjoxNjc3OTMyODMyfQ.3oiSSQhgE4Q-twjcQpEoFlRUpOiFsjPovmxnPt-e3JU'}})           
+            setContent('')
+            } catch (error) {
+            console.log(error)
+        }
+    }
+
     return(
         <>
             
@@ -14,57 +57,38 @@ function ModalPost(){
                 <StyleSection>
                     <div>
                         <article>
-                            <p className="subText">Enviado por: Fulano</p>
-                            <p>Porque a maioria dos desenvolvedores usam Linux? ou as empresas de tecnologia usam Linux ?</p>
+                            <p className="subText">Enviado por: {post && post?.creator?.username}</p>
+                            <p>{post.content}</p>
                             <p className="menuPost">
                                 <span className="subTextBold">
                                     <img src={like} alt="botão-like"/>
-                                    300
+                                    { post.likes}
                                     <img src={dislike} alt="botão-dislike"/> 
                                 </span> 
                                 <span className="subText">
                                     <img src={coment} alt="botão-comentários" />
-                                    50
+                                    {post.comments}
                                 </span>
                             </p>
                         </article>
-                        <input className="InputPost" placeholder="Escreva seu post..."/>
-                        <button>Responder</button>
+                        <input value={content} onChange={(event)=>setContent(event.target.value)} className="InputPost" placeholder="Escreva seu post..."/>
+                        <button onClick={()=>{insertNewComment()}}>Responder</button>
                     </div>
                     <div>
+                        {post && post?.comments_post?.map((comment)=>{return(
                         <article>
-                            <p className="subText">Enviado por: Fulano</p>
-                            <p>Porque a maioria dos desenvolvedores usam Linux? ou as empresas de tecnologia usam Linux ?</p>
+                            {/* Corrigir linha abaixo, para puxar o nome do criador do comentário */}
+                            <p className="subText">Enviado por: {comment.creator_id}</p>
+                            <p>{comment.content}</p>
                             <p className="menuPost">
                                 <span className="subTextBold">
                                     <img src={like} alt="botão-like"/>
-                                    300
+                                    {comment.likes}
                                     <img src={dislike} alt="botão-dislike"/> 
                                 </span> 
                             </p>
                         </article>
-                        <article>
-                            <p className="subText">Enviado por: Fulano</p>
-                            <p>Porque a maioria dos desenvolvedores usam Linux? ou as empresas de tecnologia usam Linux ?</p>
-                            <p className="menuPost">
-                                <span className="subTextBold">
-                                    <img src={like} alt="botão-like"/>
-                                    300
-                                    <img src={dislike} alt="botão-dislike"/> 
-                                </span> 
-                            </p>
-                        </article>
-                        <article>
-                            <p className="subText">Enviado por: Fulano</p>
-                            <p>Porque a maioria dos desenvolvedores usam Linux? ou as empresas de tecnologia usam Linux ?</p>
-                            <p className="menuPost">
-                                <span className="subTextBold">
-                                    <img src={like} alt="botão-like"/>
-                                    300
-                                    <img src={dislike} alt="botão-dislike"/> 
-                                </span> 
-                            </p>
-                        </article>
+                        )})}
                     </div>
                 </StyleSection>
             </StyleContainerModal>

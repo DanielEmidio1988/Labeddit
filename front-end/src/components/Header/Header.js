@@ -15,6 +15,7 @@ function Header() {
     const closeModal = ()=>{
         context.setModal(false)
         context.setActionModal("")
+        context.setUrlPost('')
     }
 
     //Daniel: callback utilizado para sair da conta do usuário e 'resetar' os modais

@@ -416,7 +416,7 @@ export class PostBusiness {
                 dislikes,
                 filterPostToLike.created_at,
                 filterPostToLike.updated_at,
-                {id: '',
+                {id: filterPostToLike.creator_id,
                 username: ""},
                 {id: '',
                 creator_id: '',
@@ -435,6 +435,27 @@ export class PostBusiness {
             } 
     
             const postToLikeDB = postToLike.toDBModel()
+            // const postToUpdateDB = {
+            //     id,
+            //     content: postToLikeDB.content,
+            //     comments: postToLikeDB.comments,
+            //     creator_id: postToLikeDB.creator_id,
+            //     likes,
+            //     dislikes,
+            //     created_at: postToLikeDB.created_at,
+            //     updated_at: postToLikeDB.updated_at,
+                
+            // }
+
+            // id: string,
+            // creator_id: string,
+            // content: string,
+            // comments: number,
+            // likes: number,
+            // dislikes: number,
+            // created_at: string,
+            // updated_at: string,
+            // await this.postDatabase.updatePost(postToLikeDB,id)
             await this.postDatabase.updatePost(postToLikeDB,id)
             await this.postDatabase.updateLikeDislike(updateLikeDB)
     
