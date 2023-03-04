@@ -55,6 +55,7 @@ export const StyleSection = styled.section`
     div:first-child{
         margin-top: 2vh;
         min-height: 26vh;
+        width: 100%;
     }
 
     div{
@@ -71,6 +72,7 @@ export const StyleSection = styled.section`
             border: none;
             background-color: #EDEDED;
             height: 130px;
+            width: 100%;
             font-family: 'IBM Plex Sans';
             color: #6F6F6F;
             font-weight: 400;
@@ -79,6 +81,7 @@ export const StyleSection = styled.section`
 
         button{
             border-radius: 12px;
+            width: 100%;
         }
 
         article{

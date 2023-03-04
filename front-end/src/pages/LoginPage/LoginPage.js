@@ -10,6 +10,7 @@ import { BASE_URL } from "../../constants/BASE_URL"
 
 function LoginPage(){
     const navigate = useNavigate()
+    const context = useContext(GlobalContext)
     const [form, setForm] = useState({email:'',password:''})
 
     const onChangeForm = (event) => {
@@ -24,7 +25,12 @@ function LoginPage(){
             }
             const response = await axios.post(`${BASE_URL}/users/login`, body)
             console.log("response", response)
-            goToHomePage(navigate)
+            context.setToken(response.data.token)
+            console.log("teste vazio", response.data.tok)
+            console.log("teste cheio", response.data.token)
+            if(context.token !== undefined){
+                goToHomePage(navigate)
+            } 
         } catch (error) {
             console.log(error)
             //Daniel: criar modal com o status 404 (senha incorreta)
