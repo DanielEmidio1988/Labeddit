@@ -20,18 +20,6 @@ function HomePage(){
     // const params = useParams()
     const [content, setContent] = useState('')
 
-    const insertNewPost = async () =>{
-        try {          
-            let body = {
-                content,
-            }
-            await axios.post(`${BASE_URL}/posts`,body,{
-                headers:{Authorization:context.token}})           
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
     useEffect(()=>{
         browserPosts()
     },[])
@@ -56,6 +44,20 @@ function HomePage(){
         }
     },[])
 
+    const insertNewPost = async () =>{
+        try {          
+            let body = {
+                content,
+            }
+            await axios.post(`${BASE_URL}/posts`,body,{
+                headers:{Authorization:context.token}})  
+            browserPosts() 
+            setContent('')        
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
 
     // console.log(context.token)
     return(
@@ -70,7 +72,8 @@ function HomePage(){
                 <>
                 {/* <section className="boxOverlay" /> */}
                 <ModalPost
-                postId={context.urlPost}/> 
+                postId={context.urlPost}
+                browserPosts={browserPosts}/> 
                 </>
                 : 
                 ''}
@@ -83,7 +86,8 @@ function HomePage(){
                     <div>
                         {context.posts && context?.posts?.map((post)=> {return(
                             <PostCard key={post.id}
-                            post={post}/>
+                            post={post}
+                            browserPosts={browserPosts}/>
                         )})}
                     </div>
                 </StyleSection>

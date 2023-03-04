@@ -9,7 +9,7 @@ import coment from "../../assets/coment.svg"
 import { useEffect, useState } from "react"
 import { BASE_URL } from "../../constants/BASE_URL"
 
-function ModalPost(){
+function ModalPost(props){
 
     const context = useContext(GlobalContext)
     const [post, setPost] = useState({})
@@ -18,7 +18,7 @@ function ModalPost(){
     useEffect(()=>{
         browserPost()
     },
-    [context.urlPost, context.posts])
+    [])
 
     //Daniel: renderizar publicação individual
     const browserPost = async()=>{
@@ -36,6 +36,38 @@ function ModalPost(){
         }
     }
 
+    const likePost = async (postId)=>{
+        try {
+            let body = {
+                like: 1,
+            }
+            await axios.put(`${BASE_URL}/posts/${postId}/like`,body,{
+                headers:{
+                    Authorization:context.token
+                }})
+                browserPost()
+                props.browserPosts()
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const dislikePost = async (postId)=>{
+        try {
+            let body = {
+                like: 0,
+            }
+            await axios.put(`${BASE_URL}/posts/${postId}/like`,body,{
+                headers:{
+                    Authorization:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InUwMDEiLCJ1c2VybmFtZSI6IkRhbmllbCIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTY3Nzg0NjQzMiwiZXhwIjoxNjc3OTMyODMyfQ.3oiSSQhgE4Q-twjcQpEoFlRUpOiFsjPovmxnPt-e3JU'
+                }})
+                browserPost()
+                props.browserPosts()
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     const insertNewComment = async () =>{
         try {          
             let body = {
@@ -44,7 +76,8 @@ function ModalPost(){
             await axios.post(`${BASE_URL}/posts/${context.urlPost}`,body,{
                 headers:{Authorization:context.token}})           
             setContent('')
-
+            browserPost()
+            props.browserPosts()
             } catch (error) {
             console.log(error)
         }
@@ -56,15 +89,16 @@ function ModalPost(){
             <StyleContainerModal>
             <Header/>
                 <StyleSection>
+                    {/* Daniel: div relacionada a publicação selecionada */}
                     <div>
                         <article>
                             <p className="subText">Enviado por: {post && post?.creator?.username}</p>
                             <p>{post.content}</p>
                             <p className="menuPost">
                                 <span className="subTextBold">
-                                    <img src={like} alt="botão-like"/>
+                                    <img src={like} onClick={()=>likePost(post.id)} alt="botão-like"/>
                                     { post.likes}
-                                    <img src={dislike} alt="botão-dislike"/> 
+                                    <img src={dislike} onClick={()=>dislikePost(post.id)} alt="botão-dislike"/> 
                                 </span> 
                                 <span className="subText">
                                     <img src={coment} alt="botão-comentários" />
@@ -75,6 +109,8 @@ function ModalPost(){
                         <input value={content} onChange={(event)=>setContent(event.target.value)} className="InputPost" placeholder="Escreva seu post..."/>
                         <button onClick={()=>{insertNewComment()}}>Responder</button>
                     </div>
+
+                    {/* Daniel: div relacionada aos comentários da publicação */}
                     <div>
                         {post && post?.comments_post?.map((comment)=>{return(
                         <article>
@@ -83,9 +119,9 @@ function ModalPost(){
                             <p>{comment.content}</p>
                             <p className="menuPost">
                                 <span className="subTextBold">
-                                    <img src={like} alt="botão-like"/>
+                                    <img src={like} onClick={()=>likePost(comment.id)} alt="botão-like"/>
                                     {comment.likes}
-                                    <img src={dislike} alt="botão-dislike"/> 
+                                    <img src={dislike} onClick={()=>dislikePost(comment.id)} alt="botão-dislike"/> 
                                 </span> 
                             </p>
                         </article>

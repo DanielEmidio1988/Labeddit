@@ -102,6 +102,10 @@ export const StyleSection = styled.section`
                 gap: 18px;
                 border: 1px solid #E0E0E0;
                 border-radius: 28px;
+
+                img:hover{
+                    cursor:pointer;
+                }
             }
         }
     }

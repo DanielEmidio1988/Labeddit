@@ -4,17 +4,11 @@
 
 API construida para o gerenciamento das informações da Base de Dados da aplicação do Labeddit, onde você pode manipular informações de cadastro de usuários e publicações.
 
-## 👥Equipe
-- DANIEL EMIDIO
-
 ## 🔗Link de Acesso
-- Surge: Em breve;
-
-## 🧭Status do Projeto
-- ⏳Em andamento: aplicando testes unitários
+- Surge: Em breve;  
 
 ### 📄Concepção do Projeto
-Documentação Postman: [clique aqui!]('')
+Documentação Postman: [clique aqui!]('https://documenter.getpostman.com/view/24460616/2s93JnUmbg')
 
 Para este projeto, são modelados 5 entidades: USERS(usuários), POSTS(publicação), COMMENTS(comentários), LIKES_DISLIKES(likes e dislikes publicações), LIKES_DISLIKES(likes e dislikes comentários).
 
@@ -46,14 +40,6 @@ Para este projeto, são modelados 5 entidades: USERS(usuários), POSTS(publicaç
 - dotenv: biblioteca de variáveis de ambiente;
 - jsonwebtoken: biblioteca para geração de tokens;
 - bcryptjs: biblioteca para criptografia de senhas;
-
-## 💻Tecnologias 
-
-![NodeJs](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)
-![Typescript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
-![SQLite](https://img.shields.io/badge/SQLite-07405E?style=for-the-badge&logo=sqlite&logoColor=white)
-![Jest](https://img.shields.io/badge/Jest-323330?style=for-the-badge&logo=Jest&logoColor=white)
-![Git](https://img.shields.io/badge/GIT-E44C30?style=for-the-badge&logo=git&logoColor=white)
 
 ## 🛰Executando o Projeto
 - npm install: Instala todas as dependências listadas no package.json;

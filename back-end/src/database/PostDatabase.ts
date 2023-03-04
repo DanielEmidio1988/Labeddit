@@ -54,12 +54,38 @@ export class PostDatabase extends BaseDatabase{
         return postDB
     }
 
+    //Daniel: busca um unico comentário
     public getCommentById = async (id: string)=>{
         const [commentDB]:PostDB[] | undefined = await BaseDatabase
         .connection(PostDatabase.COMMENTS_TABLE)
         .select().where({id:id})
 
         return commentDB
+    }
+
+    //Daniel: busca uma relação de comentários pelo post_id
+    public getCommentsById = async(id:string)=>{
+        const commentDB:PostDB[] | undefined = await BaseDatabase
+        .connection(PostDatabase.COMMENTS_TABLE)
+        .select().where({post_id:id})
+
+        return commentDB
+    }
+
+    public getLikeDislikeByPostId = async (id:string)=>{
+        const likeDislikeDB:LikeDislikeDB[] | undefined = await BaseDatabase
+        .connection(PostDatabase.LIKEDISLIKE_TABLE)
+        .select().where({post_id:id})
+
+        return likeDislikeDB
+    }
+
+    public getLikeDislikeByCommentId = async (id:string)=>{
+        const likeDislikeDB:LikeDislikeCommentDB[] | undefined = await BaseDatabase
+        .connection(PostDatabase.LIKEDISLIKECOMMENT_TABLE)
+        .select().where({comment_id:id})
+
+        return likeDislikeDB
     }
 
     public insertNewPost = async(newPostDB:PostDB)=>{
@@ -91,6 +117,27 @@ export class PostDatabase extends BaseDatabase{
         .connection(PostDatabase.POSTS_TABLE)
         .del()
         .where({id:id})
+    }
+
+    public deleteCommentsbyId = async(id:string)=>{
+        await BaseDatabase
+        .connection(PostDatabase.COMMENTS_TABLE)
+        .del()
+        .where({post_id:id})
+    }
+
+    public deleteLikeDislike = async(id:string)=>{
+        await BaseDatabase
+        .connection(PostDatabase.LIKEDISLIKE_TABLE)
+        .del()
+        .where({post_id:id})
+    }
+
+    public deleteLikeDislikeComments = async(id:string)=>{
+        await BaseDatabase
+        .connection(PostDatabase.LIKEDISLIKE_TABLE)
+        .del()
+        .where({comment_id:id})
     }
 
     public likeDislike = async(user_id:string, post_id: string)=>{
