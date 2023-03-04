@@ -24,7 +24,7 @@ function PostCard (props){
                 headers:{
                     Authorization:context.token
                 }})
-            console.log('passou por aqui')
+            props.browserPosts()
         } catch (error) {
             console.log(error)
         }
@@ -39,7 +39,7 @@ function PostCard (props){
                 headers:{
                     Authorization:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InUwMDEiLCJ1c2VybmFtZSI6IkRhbmllbCIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTY3Nzg0NjQzMiwiZXhwIjoxNjc3OTMyODMyfQ.3oiSSQhgE4Q-twjcQpEoFlRUpOiFsjPovmxnPt-e3JU'
                 }})
-            console.log('passou por aqui')
+            props.browserPosts()
         } catch (error) {
             console.log(error)
         }

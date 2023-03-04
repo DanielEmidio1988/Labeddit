@@ -371,18 +371,31 @@ export class PostBusiness {
         }
 
         const filterUserDB = await this.userDatabase.getUserById(filterPostToDelete.creator_id)
-
+        
+        //Daniel: primeiro verifica se o perfil possui perfil 'ADMIN' para excluir uma publicação
         if(filterUserDB.role !== ROLE_USER.ADMIN){
+            //Daniel: caso negativo, verifica se o mesmo usuário que criou a publicação é quem deseja excluir
             if(filterUserDB.id !== payload.id){
                 throw new BadRequestError("Você não possui autorização para realizar esta operação")
             }
         }
 
-        // const filterPostById = await this.postDatabase.getPostById(id)
+        //Daniel: verifica se há alguma informação de 'curtida' da publicação dentro da tabela 'like-dislikes'
+        const filterLikeDislikeDB = await this.postDatabase.getLikeDislikeByPostId(id)
+        if(filterLikeDislikeDB.length > 0){
+            await this.postDatabase.deleteLikeDislike(id)
+        }
 
-        // if(!filterPostById){
-        //     throw new BadRequestError("'Post' não localizado")
-        // }
+        //Daniel: verifica se há algum comentário relacionado a publicação
+        const filterCommentsDB = await this.postDatabase.getCommentsById(id)
+        if(filterCommentsDB.length > 0){
+            //Daniel: verifica se há alguma informação de 'curtida' do comentário dentro da tabela 'like-dislikes-comments'
+            const filterLikeDislikeCommentDB = await this.postDatabase.getLikeDislikeByCommentId(filterCommentsDB[0].id)
+            if(filterLikeDislikeCommentDB.length > 0){
+                await this.postDatabase.deleteLikeDislike(filterCommentsDB[0].id)
+            }
+            await this.postDatabase.deleteCommentsbyId(id)
+        }
 
         await this.postDatabase.deletePostbyId(id)
         const output = {
@@ -420,14 +433,14 @@ export class PostBusiness {
 
         //Atualização do numero de likes caso exista uma publicação
         if(filterPostToLike){
-            let likes = 0
-            let dislikes = 0
+            let likes = filterPostToLike.likes
+            let dislikes = filterPostToLike.dislikes
     
             if(like === 0){
-                dislikes = 1
+                dislikes++
                 
             }else if(like === 1){
-                likes = 1
+                likes++
             }else{
                 throw new BadRequestError("Informe um número válido. (1) like, (0) dislike")
             }

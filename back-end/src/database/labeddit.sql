@@ -71,3 +71,5 @@ VALUES("c001", "u002", "Parabéns! \o/", "p001"),
 ("c003", "u002", "Prefiro o LabedIn", "p002");
 
 DELETE FROM posts;
+
+UPDATE users SET role="ADMIN" WHERE ID = 'e5211187-9114-49dc-bb8e-42225b5bf8f9';
