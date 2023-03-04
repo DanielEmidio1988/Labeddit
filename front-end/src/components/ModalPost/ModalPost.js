@@ -26,7 +26,7 @@ function ModalPost(){
             let aux = ''
             const response = await axios.get(`${BASE_URL}/posts/${context.urlPost}`,{
                 headers:{
-                    Authorization:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InUwMDEiLCJ1c2VybmFtZSI6IkRhbmllbCIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTY3Nzg0NjQzMiwiZXhwIjoxNjc3OTMyODMyfQ.3oiSSQhgE4Q-twjcQpEoFlRUpOiFsjPovmxnPt-e3JU'
+                    Authorization:context.token
                 }})
             console.log("modal", response.data[0])
             aux = response.data[0]
@@ -42,8 +42,9 @@ function ModalPost(){
                 content,
             }
             await axios.post(`${BASE_URL}/posts/${context.urlPost}`,body,{
-                headers:{Authorization:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InUwMDEiLCJ1c2VybmFtZSI6IkRhbmllbCIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTY3Nzg0NjQzMiwiZXhwIjoxNjc3OTMyODMyfQ.3oiSSQhgE4Q-twjcQpEoFlRUpOiFsjPovmxnPt-e3JU'}})           
+                headers:{Authorization:context.token}})           
             setContent('')
+
             } catch (error) {
             console.log(error)
         }

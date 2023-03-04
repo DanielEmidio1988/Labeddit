@@ -218,7 +218,7 @@ export class PostBusiness {
         const likes = 0
         const dislikes = 0
         const creator_id = payload.id
-        
+        // const commentsUpdate: filterPostById.comments
 
         if (content !== undefined){
             if(typeof content !== "string"){
@@ -248,8 +248,32 @@ export class PostBusiness {
             post_id: filterPostById.id,}
             )
         
+        const postToUpdate = new Post(
+            filterPostById.id,
+            filterPostById.content,
+            filterPostById.comments+1,
+            filterPostById.likes,
+            filterPostById.dislikes,
+            filterPostById.created_at,
+            filterPostById.updated_at,
+            {
+                id:filterPostById.creator_id,
+                username: ''
+            },
+            {id: '',
+            creator_id: '',
+            content: '',
+            likes: 0,
+            dislikes: 0,
+            created_at: '',
+            updated_at: '',
+            post_id: '',}
+        )
+
         const newCommentDB = newComment.toDBCommentModel()
         await this.postDatabase.insertNewComment(newCommentDB)
+        const postToUpdateDB = postToUpdate.toDBModel()
+        await this.postDatabase.updatePost(postToUpdateDB,filterPostById.id)
 
         const output = {
             message: "Publicação realizada com sucesso",
@@ -435,27 +459,7 @@ export class PostBusiness {
             } 
     
             const postToLikeDB = postToLike.toDBModel()
-            // const postToUpdateDB = {
-            //     id,
-            //     content: postToLikeDB.content,
-            //     comments: postToLikeDB.comments,
-            //     creator_id: postToLikeDB.creator_id,
-            //     likes,
-            //     dislikes,
-            //     created_at: postToLikeDB.created_at,
-            //     updated_at: postToLikeDB.updated_at,
-                
-            // }
 
-            // id: string,
-            // creator_id: string,
-            // content: string,
-            // comments: number,
-            // likes: number,
-            // dislikes: number,
-            // created_at: string,
-            // updated_at: string,
-            // await this.postDatabase.updatePost(postToLikeDB,id)
             await this.postDatabase.updatePost(postToLikeDB,id)
             await this.postDatabase.updateLikeDislike(updateLikeDB)
     

@@ -5,8 +5,10 @@ import { StyleMain, StyleSection } from "../../constants/stylePages"
 // import dislike from "../../assets/dislike.svg"
 // import coment from "../../assets/coment.svg"
 import { useContext, useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
 import {GlobalContext} from "../../context/GlobalContext"
 // import { useParams } from "react-router-dom"
+import { goToLoginPage } from "../../router/coordinator"
 import ModalPost from "../../components/ModalPost/ModalPost"
 import PostCard from "../../components/PostCard/PostCard"
 import { BASE_URL } from "../../constants/BASE_URL" 
@@ -14,6 +16,7 @@ import { BASE_URL } from "../../constants/BASE_URL"
 function HomePage(){
 
     const context = useContext(GlobalContext)
+    const navigate = useNavigate()
     // const params = useParams()
     const [content, setContent] = useState('')
 
@@ -23,13 +26,38 @@ function HomePage(){
                 content,
             }
             await axios.post(`${BASE_URL}/posts`,body,{
-                headers:{Authorization:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InUwMDEiLCJ1c2VybmFtZSI6IkRhbmllbCIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTY3Nzg0NjQzMiwiZXhwIjoxNjc3OTMyODMyfQ.3oiSSQhgE4Q-twjcQpEoFlRUpOiFsjPovmxnPt-e3JU'}})           
+                headers:{Authorization:context.token}})           
         } catch (error) {
             console.log(error)
         }
     }
 
-    console.log(context.posts)
+    useEffect(()=>{
+        browserPosts()
+    },[])
+
+    const browserPosts = async()=>{
+        try {
+            const response = await axios.get(`${BASE_URL}/posts`,{
+                headers: {
+                    Authorization: context.token
+                }
+            }) 
+            console.log(response)
+            context.setPosts(response.data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    useEffect(()=>{
+        if(context.token === undefined){
+            goToLoginPage(navigate)
+        }
+    },[])
+
+
+    // console.log(context.token)
     return(
         <>
             {context.modal ? 
@@ -53,8 +81,8 @@ function HomePage(){
                         <button onClick={()=>insertNewPost()}>Postar</button>
                     </div>
                     <div>
-                        {context.posts && context.posts.map((post)=> {return(
-                            <PostCard
+                        {context.posts && context?.posts?.map((post)=> {return(
+                            <PostCard key={post.id}
                             post={post}/>
                         )})}
                     </div>

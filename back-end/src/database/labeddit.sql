@@ -70,3 +70,4 @@ VALUES("c001", "u002", "Parabéns! \o/", "p001"),
 ("c002", "u001", "Valeu! :)", "p001"),
 ("c003", "u002", "Prefiro o LabedIn", "p002");
 
+DELETE FROM posts;
