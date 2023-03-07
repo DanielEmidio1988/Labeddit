@@ -4,7 +4,7 @@ import axios from "axios"
 import { StyleMain, StyleSectionLoginSignup } from "../../constants/stylePages"
 import { goToSignUpPage, goToHomePage } from "../../router/coordinator"
 import { useNavigate } from "react-router-dom"
-import { useContext, useState } from "react"
+import { useContext, useState, useEffect } from "react"
 import {GlobalContext} from "../../context/GlobalContext"
 import { BASE_URL } from "../../constants/BASE_URL"
 
@@ -17,18 +17,30 @@ function LoginPage(){
         setForm({ ...form, [event.target.name]: event.target.value })
     }
 
+    useEffect(()=>{
+        const token = window.localStorage.getItem("TokenApi-Labeddit")
+        if(token){
+            goToHomePage(navigate)
+        }
+    },[])
+
     const loginUser = async ()=>{
         try {
             let body ={
                 email: form.email,
                 password: form.password,
             }
+
             const response = await axios.post(`${BASE_URL}/users/login`, body)
             console.log("response", response)
             context.setToken(response.data.token)
-            console.log("teste vazio", response.data.tok)
-            console.log("teste cheio", response.data.token)
-            if(context.token !== undefined){
+            // const tokenlabedditapi = JSON.stringify(response.data.token)
+            window.localStorage.setItem("TokenApi-Labeddit", response.data.token)
+
+            // localStorage.setItem('TokenApi-Labeddit', context.token)
+            // console.log("teste vazio", response.data.tok)
+            // console.log("teste cheio", response.data.token)
+            if(response.data.token !== undefined){
                 goToHomePage(navigate)
             } 
         } catch (error) {
@@ -36,6 +48,7 @@ function LoginPage(){
             //Daniel: criar modal com o status 404 (senha incorreta)
         }
     }
+
 
     return(
         <>

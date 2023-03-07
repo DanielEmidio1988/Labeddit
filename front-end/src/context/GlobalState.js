@@ -15,6 +15,8 @@ function GlobalState(){
 
     const [token, setToken] = useState('')
 
+    const [loading, setLoading] = useState(false)
+
     //Daniel: controlar exibição de modais
     const [modal, setModal] = useState(false)
 
@@ -28,6 +30,8 @@ function GlobalState(){
         setUrlPost,
         token,
         setToken,
+        loading, 
+        setLoading,
         modal, 
         setModal,
         actionModal, 

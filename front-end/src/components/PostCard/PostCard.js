@@ -22,7 +22,7 @@ function PostCard (props){
             }
             await axios.put(`${BASE_URL}/posts/${postId}/like`,body,{
                 headers:{
-                    Authorization:context.token
+                    Authorization:window.localStorage.getItem("TokenApi-Labeddite")
                 }})
             props.browserPosts()
         } catch (error) {
@@ -37,7 +37,7 @@ function PostCard (props){
             }
             await axios.put(`${BASE_URL}/posts/${postId}/like`,body,{
                 headers:{
-                    Authorization:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InUwMDEiLCJ1c2VybmFtZSI6IkRhbmllbCIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTY3Nzg0NjQzMiwiZXhwIjoxNjc3OTMyODMyfQ.3oiSSQhgE4Q-twjcQpEoFlRUpOiFsjPovmxnPt-e3JU'
+                    Authorization:window.localStorage.getItem("TokenApi-Labeddite")
                 }})
             props.browserPosts()
         } catch (error) {

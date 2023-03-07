@@ -15,6 +15,7 @@ function SignupPage (){
         email: '',
         password: '',
     })
+    const [checkBox, setCheckBox] = useState(false)
     const context = useContext(GlobalContext)
 
     const onChangeForm = (event)=>{
@@ -23,6 +24,7 @@ function SignupPage (){
 
     const signUp = async ()=>{
         try {
+            //Daniel: INCLUIR CONDICIONAL PARA NÃO PERMITIR CADASTRO, CASO O CHECKBOX SEJA FALSO
             let body ={
                 username: form.username,
                 email: form.email,
@@ -30,10 +32,16 @@ function SignupPage (){
             }
             const response = await axios.post(`${BASE_URL}/users/signup`, body)
             context.setToken(response.data.token)
+            window.localStorage.setItem("TokenApi-Labeddit", response.data.token)
             goToHomePage(navigate)
         } catch (error) {
             console.log(error)
         }
+    }
+
+    const onChangeCheckBox = (event)=>{
+        const auxCheckBox = !checkBox
+        setCheckBox(auxCheckBox)
     }
 
     return(
@@ -53,7 +61,7 @@ function SignupPage (){
                     <p>Ao continuar, você concorda com o nosso <a href="#">Contrato de usuário</a> e nossa <a href="#">Politica de Privacidade</a></p>
                     <p>
                         <span>
-                            <input className="CheckBox" type="checkbox"/>
+                            <input name="rememberme" value={checkBox} onChange={onChangeCheckBox} className="CheckBox" type="checkbox"/>
                         </span>
                         Eu concordo em receber e-mails sobre coisas legais no Labeddit
                     </p>

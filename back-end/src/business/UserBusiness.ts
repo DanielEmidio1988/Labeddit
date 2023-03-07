@@ -158,8 +158,9 @@ export class UserBusiness{
 
             const output = {message:"Login realizado com sucesso", token}
             return output
-        }else{
-            const output = {message:"Dados incorretos!"}
+        }
+        else{
+            const output = {message:"Dados incorretos!", token: ''}
             return output
         }  
 
