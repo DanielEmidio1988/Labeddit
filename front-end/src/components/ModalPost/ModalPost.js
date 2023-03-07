@@ -26,7 +26,7 @@ function ModalPost(props){
             let aux = ''
             const response = await axios.get(`${BASE_URL}/posts/${context.urlPost}`,{
                 headers:{
-                    Authorization:context.token
+                    Authorization:window.localStorage.getItem("TokenApi-Labeddite")
                 }})
             console.log("modal", response.data[0])
             aux = response.data[0]
@@ -43,7 +43,7 @@ function ModalPost(props){
             }
             await axios.put(`${BASE_URL}/posts/${postId}/like`,body,{
                 headers:{
-                    Authorization:context.token
+                    Authorization:window.localStorage.getItem("TokenApi-Labeddite")
                 }})
                 browserPost()
                 props.browserPosts()
@@ -59,7 +59,7 @@ function ModalPost(props){
             }
             await axios.put(`${BASE_URL}/posts/${postId}/like`,body,{
                 headers:{
-                    Authorization:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InUwMDEiLCJ1c2VybmFtZSI6IkRhbmllbCIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTY3Nzg0NjQzMiwiZXhwIjoxNjc3OTMyODMyfQ.3oiSSQhgE4Q-twjcQpEoFlRUpOiFsjPovmxnPt-e3JU'
+                    Authorization:window.localStorage.getItem("TokenApi-Labeddite")
                 }})
                 browserPost()
                 props.browserPosts()
@@ -74,7 +74,9 @@ function ModalPost(props){
                 content,
             }
             await axios.post(`${BASE_URL}/posts/${context.urlPost}`,body,{
-                headers:{Authorization:context.token}})           
+                headers:{
+                    Authorization:window.localStorage.getItem("TokenApi-Labeddite")
+                }})           
             setContent('')
             browserPost()
             props.browserPosts()

@@ -15,8 +15,8 @@ export class PostController{
         try {
 
             const input ={
-                q:req.query.q as string | undefined,
-                token: req.headers.authorization
+                q:req.query.q as string,
+                token: req.headers.authorization as string
             }  
             
 
@@ -43,8 +43,8 @@ export class PostController{
         try {
 
             const input ={
-                id:req.params.id as string | undefined,
-                token: req.headers.authorization
+                id:req.params.id as string,
+                token: req.headers.authorization as string
             }  
             
 
@@ -71,7 +71,7 @@ export class PostController{
         try {
                 
         const content = req.body.content
-        const token = req.headers.authorization
+        const token = req.headers.authorization as string
 
             const input = this.postDTO.insertInputPost(content, token)
 
@@ -99,7 +99,7 @@ export class PostController{
 
         const id = req.params.id        
         const content = req.body.content
-        const token = req.headers.authorization
+        const token = req.headers.authorization as string
 
             const input = this.postDTO.InsertInputComment(id, content, token)
 
@@ -127,7 +127,7 @@ export class PostController{
             
         const id = req.params.id
         const content = req.body.content
-        const token = req.headers.authorization
+        const token = req.headers.authorization as string
 
         const input = await this.postDTO.updateInputPost(id,content, token)
 
@@ -153,7 +153,7 @@ export class PostController{
         try {
 
             const id = req.params.id
-            const token = req.headers.authorization
+            const token = req.headers.authorization as string
 
             const input = await this.postDTO.deleteInputPost(id, token)
 
@@ -182,7 +182,7 @@ export class PostController{
             const input = {
                 id: req.params.id,
                 like: req.body.like,
-                token: req.headers.authorization,
+                token: req.headers.authorization as string,
             }
 
             const output = await this.postBusiness.likeDislike(input)

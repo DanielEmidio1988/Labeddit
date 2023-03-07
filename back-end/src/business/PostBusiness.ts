@@ -372,6 +372,11 @@ export class PostBusiness {
 
         const filterUserDB = await this.userDatabase.getUserById(filterPostToDelete.creator_id)
         
+        //Daniel: condicional criada para evitar que esta função não seja aplicada caso filterUserDB seja indefinido
+        if(filterUserDB === undefined){
+            throw new BadRequestError("Dados de publicação 'indefinido'")
+        }
+
         //Daniel: primeiro verifica se o perfil possui perfil 'ADMIN' para excluir uma publicação
         if(filterUserDB.role !== ROLE_USER.ADMIN){
             //Daniel: caso negativo, verifica se o mesmo usuário que criou a publicação é quem deseja excluir

@@ -14,8 +14,8 @@ export class UserController{
         try {
             
             const input ={
-                q:req.query.q as string | undefined,
-                token: req.headers.authorization
+                q:req.query.q as string,
+                token: req.headers.authorization as string
             }           
 
             const output = await this.userBusiness.getAllUsers(input)

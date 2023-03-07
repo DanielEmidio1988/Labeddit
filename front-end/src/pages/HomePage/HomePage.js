@@ -19,38 +19,55 @@ function HomePage(){
     const navigate = useNavigate()
     // const params = useParams()
     const [content, setContent] = useState('')
+    // let token = ''
 
     useEffect(()=>{
         browserPosts()
     },[])
 
-    const browserPosts = async()=>{
-        try {
-            const response = await axios.get(`${BASE_URL}/posts`,{
-                headers: {
-                    Authorization: context.token
-                }
-            }) 
-            console.log(response)
-            context.setPosts(response.data)
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
     useEffect(()=>{
-        if(context.token === undefined){
+        const token = window.localStorage.getItem("TokenApi-Labeddit")
+        if(!token){
             goToLoginPage(navigate)
         }
     },[])
 
+    const browserPosts = async()=>{
+        try {
+            context.setLoading(true)
+            const response = await axios.get(`${BASE_URL}/posts`,{
+                headers: {
+                    Authorization: window.localStorage.getItem("TokenApi-Labeddit")
+                }
+            }) 
+            console.log(response)
+            context.setPosts(response.data)
+            context.setLoading(false)
+        } catch (error) {
+            console.log(error)
+            context.setLoading(false)
+        }
+    }
+
+    // useEffect(()=>{
+    //     if(context.token === undefined){
+    //         goToLoginPage(navigate)
+    //     }
+    // },[])
+
     const insertNewPost = async () =>{
-        try {          
+        try {  
+            if(context.token === undefined){
+                return
+            }        
             let body = {
                 content,
             }
+
             await axios.post(`${BASE_URL}/posts`,body,{
-                headers:{Authorization:context.token}})  
+                headers:{
+                    Authorization:window.localStorage.getItem("TokenApi-Labeddit")
+                }})  
             browserPosts() 
             setContent('')        
         } catch (error) {
@@ -84,7 +101,10 @@ function HomePage(){
                         <button onClick={()=>insertNewPost()}>Postar</button>
                     </div>
                     <div>
-                        {context.posts && context?.posts?.map((post)=> {return(
+                        {context.loading ?
+                        'Loading...' 
+                        :
+                        context.posts && context?.posts?.map((post)=> {return(
                             <PostCard key={post.id}
                             post={post}
                             browserPosts={browserPosts}/>

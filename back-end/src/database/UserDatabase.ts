@@ -18,15 +18,6 @@ export class UserDatabase extends BaseDatabase {
         .insert(newUser)
     }
 
-    // public async login(email: string, password: string){
-    //     const [userDB]:UserDB[] | undefined = await BaseDatabase
-    //     .connection(UserDatabase.TABLE_USERS)
-    //     .select()
-    //     .where({email} && {password})
-
-    //     return userDB
-    // }
-
     public getUserByEmail = async (email: string):Promise<UserDB | undefined> =>{
         const [userDB]:UserDB[] = await BaseDatabase
         .connection(UserDatabase.TABLE_USERS)
@@ -35,7 +26,7 @@ export class UserDatabase extends BaseDatabase {
         return userDB
     }
 
-    public getUserById = async (id: string)=>{
+    public getUserById = async (id: string):Promise<UserDB | undefined>=>{
         const [userDB]:UserDB[] | undefined = await BaseDatabase
         .connection(UserDatabase.TABLE_USERS)
         .select().where({id:id})
