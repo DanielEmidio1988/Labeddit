@@ -63,7 +63,6 @@ button:hover{
     opacity: 0.8;
 }
 
-//Daniel: AJUSTAR TAMANHO DO INPUT OU ARTICLE
 input{
     border: 1px solid #D5D8DE;
     border-radius: 4px;

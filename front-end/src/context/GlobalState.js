@@ -4,17 +4,13 @@ import { useState, useEffect } from "react"
 
 function GlobalState(){
 
-    //Daniel: controle de usuários
-    const [user, setUser] = useState('')
-
     //Daniel: armazenar informações de publicações
     const [posts, setPosts] = useState([])
 
     //Daniel: armazenar endereço de uma unica publicação
     const [urlPost, setUrlPost] = useState('')
 
-    const [token, setToken] = useState('')
-
+    //Daniel: controlar o loading das requisições axios
     const [loading, setLoading] = useState(false)
 
     //Daniel: controlar exibição de modais
@@ -23,22 +19,29 @@ function GlobalState(){
     //Daniel: controlar tipo de modais
     const [actionModal, setActionModal] = useState('')
 
+    //Daniel: controlar a exibição de modais de alerta
+    const [alertModal, setAlertModal] = useState(false)
+
+    //Daniel: controlar o tipo de modais de alerta
+    const [alertMessage, setAlertMessage] = useState('')
+
     return{
         posts,
         setPosts,
         urlPost, 
         setUrlPost,
-        token,
-        setToken,
         loading, 
         setLoading,
         modal, 
         setModal,
         actionModal, 
         setActionModal,
+        alertModal, 
+        setAlertModal,
+        alertMessage, 
+        setAlertMessage
     }
     
-
 }
 
 

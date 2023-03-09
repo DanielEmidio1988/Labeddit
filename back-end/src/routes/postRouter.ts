@@ -14,7 +14,6 @@ const postController = new PostController(
     new PostBusiness(
         new PostDatabase(),
         new UserDatabase(),
-        new PostDTO(),
         new IdGenerator(),
         new TokenManager()      
     ),

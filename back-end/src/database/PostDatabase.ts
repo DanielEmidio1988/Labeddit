@@ -7,6 +7,7 @@ export class PostDatabase extends BaseDatabase{
     public static COMMENTS_TABLE = "comments_posts"
     public static LIKEDISLIKE_TABLE = "likes_dislikes"
     public static LIKEDISLIKECOMMENT_TABLE = "likes_dislikes_comments"
+    public static USERS_TABLE = "users"
 
     public getAllPosts = async () => {
         const postDB = await BaseDatabase
@@ -32,12 +33,15 @@ export class PostDatabase extends BaseDatabase{
         const postsDB = await BaseDatabase
         .connection(PostDatabase.POSTS_TABLE)
         .select().where({id:id})
+
         const creatorsDB = await BaseDatabase
         .connection(UserDatabase.TABLE_USERS)
         .select()
+
         const commentsDB = await BaseDatabase
         .connection(PostDatabase.COMMENTS_TABLE)
-        .select()
+        .select("comments_posts.*","users.username")
+        .leftJoin(PostDatabase.USERS_TABLE,"users.id","=","comments_posts.creator_id")
 
         return{
             postsDB,
@@ -46,7 +50,7 @@ export class PostDatabase extends BaseDatabase{
         }
     }
 
-    public getPostById = async (id: string)=>{
+    public getPostById = async (id: string):Promise<PostDB | undefined>=>{
         const [postDB]:PostDB[] | undefined = await BaseDatabase
         .connection(PostDatabase.POSTS_TABLE)
         .select().where({id:id})
@@ -55,8 +59,8 @@ export class PostDatabase extends BaseDatabase{
     }
 
     //Daniel: busca um unico comentário
-    public getCommentById = async (id: string)=>{
-        const [commentDB]:PostDB[] | undefined = await BaseDatabase
+    public getCommentById = async (id: string):Promise<CommentDB | undefined>=>{
+        const [commentDB]:CommentDB[] | undefined = await BaseDatabase
         .connection(PostDatabase.COMMENTS_TABLE)
         .select().where({id:id})
 
@@ -64,7 +68,7 @@ export class PostDatabase extends BaseDatabase{
     }
 
     //Daniel: busca uma relação de comentários pelo post_id
-    public getCommentsById = async(id:string)=>{
+    public getCommentsById = async(id:string):Promise<PostDB[] | undefined>=>{
         const commentDB:PostDB[] | undefined = await BaseDatabase
         .connection(PostDatabase.COMMENTS_TABLE)
         .select().where({post_id:id})
@@ -72,7 +76,7 @@ export class PostDatabase extends BaseDatabase{
         return commentDB
     }
 
-    public getLikeDislikeByPostId = async (id:string)=>{
+    public getLikeDislikeByPostId = async (id:string):Promise<LikeDislikeDB[] | undefined>=>{
         const likeDislikeDB:LikeDislikeDB[] | undefined = await BaseDatabase
         .connection(PostDatabase.LIKEDISLIKE_TABLE)
         .select().where({post_id:id})
@@ -80,7 +84,7 @@ export class PostDatabase extends BaseDatabase{
         return likeDislikeDB
     }
 
-    public getLikeDislikeByCommentId = async (id:string)=>{
+    public getLikeDislikeByCommentId = async (id:string):Promise<LikeDislikeCommentDB[] | undefined>=>{
         const likeDislikeDB:LikeDislikeCommentDB[] | undefined = await BaseDatabase
         .connection(PostDatabase.LIKEDISLIKECOMMENT_TABLE)
         .select().where({comment_id:id})
@@ -140,7 +144,7 @@ export class PostDatabase extends BaseDatabase{
         .where({comment_id:id})
     }
 
-    public likeDislike = async(user_id:string, post_id: string)=>{
+    public likeDislike = async(user_id:string, post_id: string):Promise<LikeDislikeDB | undefined>=>{
          const [likeDislikeDB]:LikeDislikeDB[] | undefined = await BaseDatabase
         .connection(PostDatabase.LIKEDISLIKE_TABLE)
         .select().where({user_id:user_id, post_id: post_id})
