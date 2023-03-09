@@ -12,8 +12,8 @@ import { BASE_URL } from "../../constants/BASE_URL"
 function ModalPost(props){
 
     const context = useContext(GlobalContext)
-    const [post, setPost] = useState({})
-    const [content, setContent] = useState('')
+    const [post, setPost] = useState({}) //Daniel: variável para controlar informações da publicação individual
+    const [content, setContent] = useState('') //Daniel: variável para armazenar comentário que será adicionado a publicação
 
     useEffect(()=>{
         browserPost()
@@ -23,19 +23,20 @@ function ModalPost(props){
     //Daniel: renderizar publicação individual
     const browserPost = async()=>{
         try {
-            let aux = ''
+            let auxPost = '' //Daniel: variável auxiliar para armazenar requisição axios
             const response = await axios.get(`${BASE_URL}/posts/${context.urlPost}`,{
                 headers:{
-                    Authorization:window.localStorage.getItem("TokenApi-Labeddite")
+                    Authorization:window.localStorage.getItem("TokenApi-Labeddit")
                 }})
-            console.log("modal", response.data[0])
-            aux = response.data[0]
-            setPost(aux)
+            auxPost = response.data[0]
+            console.log("Post", response.data[0])  
+            setPost(auxPost)
         } catch (error) {
             console.log(error)
         }
     }
 
+    //Daniel: callback para enviar requisição de 'like'
     const likePost = async (postId)=>{
         try {
             let body = {
@@ -43,7 +44,7 @@ function ModalPost(props){
             }
             await axios.put(`${BASE_URL}/posts/${postId}/like`,body,{
                 headers:{
-                    Authorization:window.localStorage.getItem("TokenApi-Labeddite")
+                    Authorization:window.localStorage.getItem("TokenApi-Labeddit")
                 }})
                 browserPost()
                 props.browserPosts()
@@ -52,6 +53,7 @@ function ModalPost(props){
         }
     }
 
+    //Daniel: callback para enviar requisição de 'dislike'
     const dislikePost = async (postId)=>{
         try {
             let body = {
@@ -59,7 +61,7 @@ function ModalPost(props){
             }
             await axios.put(`${BASE_URL}/posts/${postId}/like`,body,{
                 headers:{
-                    Authorization:window.localStorage.getItem("TokenApi-Labeddite")
+                    Authorization:window.localStorage.getItem("TokenApi-Labeddit")
                 }})
                 browserPost()
                 props.browserPosts()
@@ -68,6 +70,7 @@ function ModalPost(props){
         }
     }
 
+    //Daniel: callback para enviar novo comentário a publicação
     const insertNewComment = async () =>{
         try {          
             let body = {
@@ -75,8 +78,8 @@ function ModalPost(props){
             }
             await axios.post(`${BASE_URL}/posts/${context.urlPost}`,body,{
                 headers:{
-                    Authorization:window.localStorage.getItem("TokenApi-Labeddite")
-                }})           
+                    Authorization:window.localStorage.getItem("TokenApi-Labeddit")
+                }})         
             setContent('')
             browserPost()
             props.browserPosts()
@@ -86,8 +89,7 @@ function ModalPost(props){
     }
 
     return(
-        <>
-            
+        <>         
             <StyleContainerModal>
             <Header/>
                 <StyleSection>
@@ -115,9 +117,10 @@ function ModalPost(props){
                     {/* Daniel: div relacionada aos comentários da publicação */}
                     <div>
                         {post && post?.comments_post?.map((comment)=>{return(
-                        <article>
+                        <article key={comment.id}>
                             {/* Corrigir linha abaixo, para puxar o nome do criador do comentário */}
-                            <p className="subText">Enviado por: {comment.creator_id}</p>
+                            <p className="subText">Enviado por: {comment.username}</p>
+                            {console.log("creator",comment )}
                             <p>{comment.content}</p>
                             <p className="menuPost">
                                 <span className="subTextBold">

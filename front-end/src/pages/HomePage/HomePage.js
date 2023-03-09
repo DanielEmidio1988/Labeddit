@@ -1,13 +1,9 @@
 import Header from "../../components/Header/Header"
 import axios from "axios"
 import { StyleMain, StyleSection } from "../../constants/stylePages"
-// import like from "../../assets/like.svg"
-// import dislike from "../../assets/dislike.svg"
-// import coment from "../../assets/coment.svg"
 import { useContext, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import {GlobalContext} from "../../context/GlobalContext"
-// import { useParams } from "react-router-dom"
 import { goToLoginPage } from "../../router/coordinator"
 import ModalPost from "../../components/ModalPost/ModalPost"
 import PostCard from "../../components/PostCard/PostCard"
@@ -17,14 +13,14 @@ function HomePage(){
 
     const context = useContext(GlobalContext)
     const navigate = useNavigate()
-    // const params = useParams()
-    const [content, setContent] = useState('')
-    // let token = ''
+    const [content, setContent] = useState('') //Daniel: variável para armazenar dados de publicação.
 
+    //Daniel: Hook utilizado para renderizar publicações
     useEffect(()=>{
         browserPosts()
     },[])
 
+    //Daniel: Hook utilizado para analisar se há o Token armazenado no localStorage. Caso negativo, retorna para LoginPage
     useEffect(()=>{
         const token = window.localStorage.getItem("TokenApi-Labeddit")
         if(!token){
@@ -32,6 +28,7 @@ function HomePage(){
         }
     },[])
 
+    //Daniel: função para renderizar todas as publicações.
     const browserPosts = async()=>{
         try {
             context.setLoading(true)
@@ -40,7 +37,6 @@ function HomePage(){
                     Authorization: window.localStorage.getItem("TokenApi-Labeddit")
                 }
             }) 
-            console.log(response)
             context.setPosts(response.data)
             context.setLoading(false)
         } catch (error) {
@@ -49,17 +45,10 @@ function HomePage(){
         }
     }
 
-    // useEffect(()=>{
-    //     if(context.token === undefined){
-    //         goToLoginPage(navigate)
-    //     }
-    // },[])
-
+    //Daniel: função para inserir nova publicação
     const insertNewPost = async () =>{
         try {  
-            if(context.token === undefined){
-                return
-            }        
+
             let body = {
                 content,
             }
@@ -75,8 +64,6 @@ function HomePage(){
         }
     }
 
-
-    // console.log(context.token)
     return(
         <>
             {context.modal ? 
@@ -87,7 +74,6 @@ function HomePage(){
             <StyleMain>
                 {context.modal && context.actionModal === "post" ? 
                 <>
-                {/* <section className="boxOverlay" /> */}
                 <ModalPost
                 postId={context.urlPost}
                 browserPosts={browserPosts}/> 

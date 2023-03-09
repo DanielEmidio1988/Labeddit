@@ -5,8 +5,6 @@ import { goToHomePage } from "../../router/coordinator"
 import { useNavigate } from "react-router-dom"
 import { useState } from "react"
 import { BASE_URL } from "../../constants/BASE_URL"
-import { useContext } from "react"
-import { GlobalContext } from "../../context/GlobalContext"
 
 function SignupPage (){
     const navigate = useNavigate()
@@ -14,34 +12,28 @@ function SignupPage (){
         username: '',
         email: '',
         password: '',
-    })
-    const [checkBox, setCheckBox] = useState(false)
-    const context = useContext(GlobalContext)
+    }) //Daniel: objeto para armazenar informações para cadastro de usuário
+
 
     const onChangeForm = (event)=>{
         setForm({ ...form, [event.target.name]: event.target.value })
     }
 
+    //Daniel: callback para controlar requisição de cadastro
     const signUp = async ()=>{
         try {
-            //Daniel: INCLUIR CONDICIONAL PARA NÃO PERMITIR CADASTRO, CASO O CHECKBOX SEJA FALSO
+
             let body ={
                 username: form.username,
                 email: form.email,
                 password: form.password,
             }
             const response = await axios.post(`${BASE_URL}/users/signup`, body)
-            context.setToken(response.data.token)
             window.localStorage.setItem("TokenApi-Labeddit", response.data.token)
             goToHomePage(navigate)
         } catch (error) {
             console.log(error)
         }
-    }
-
-    const onChangeCheckBox = (event)=>{
-        const auxCheckBox = !checkBox
-        setCheckBox(auxCheckBox)
     }
 
     return(
@@ -61,9 +53,9 @@ function SignupPage (){
                     <p>Ao continuar, você concorda com o nosso <a href="#">Contrato de usuário</a> e nossa <a href="#">Politica de Privacidade</a></p>
                     <p>
                         <span>
-                            <input name="rememberme" value={checkBox} onChange={onChangeCheckBox} className="CheckBox" type="checkbox"/>
+                            <input className="CheckBox" type="checkbox"/>
+                            <label>Eu concordo em receber e-mails sobre coisas legais no Labeddit</label>
                         </span>
-                        Eu concordo em receber e-mails sobre coisas legais no Labeddit
                     </p>
                     <button onClick={()=>signUp()}>Cadastrar</button>
                 </div>

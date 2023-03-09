@@ -1,4 +1,4 @@
-import { PostbyUsersDB, PostWithCommentsDB, PostDB, CommentDB, UserDB, LikeDislikeDB} from "../types";
+import { PostbyUsersDB, PostWithCommentsDB, PostDB, CommentDB, CommentWithCreatorDB, UserDB, LikeDislikeDB} from "../types";
 
 export class Post {
     constructor(
@@ -13,7 +13,7 @@ export class Post {
             id: string,
             username: string,
         },
-        private comments_post: CommentDB,
+        private comments_post: CommentWithCreatorDB,
     ){}
 
     public toDBModel(): PostDB{
@@ -63,6 +63,20 @@ export class Post {
         }
     }
 
+    // public toBusinessCommentsModel():PostWithCommentsDB{
+    //     return{
+    //         id: this.id,
+    //         content: this.content,
+    //         comments: this.comments,
+    //         likes: this.likes,
+    //         dislikes: this.dislikes,
+    //         created_at: this.created_at,
+    //         updated_at: this.updated_at,
+    //         creator: this.creator,
+    //         comments_post: this.comments_post
+    //     }
+    // }
+
     public toBusinessCommentsModel():PostWithCommentsDB{
         return{
             id: this.id,
@@ -73,9 +87,22 @@ export class Post {
             created_at: this.created_at,
             updated_at: this.updated_at,
             creator: this.creator,
-            comments_post: this.comments_post
+            comments_post: this.comments_post          
         }
     }
+
+    // id: string,
+    // content: string,
+    // comments: number,
+    // likes: number,
+    // dislikes: number,
+    // created_at: string,
+    // updated_at: string,
+    // creator: {
+    //     id: string,
+    //     username: string,
+    // },
+    // comments_post: CommentWithCreatorDB,
 
     public getId():string{
         return this.id

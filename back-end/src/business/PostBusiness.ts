@@ -3,7 +3,7 @@ import { UserDatabase } from "../database/UserDatabase"
 import { ROLE_USER } from "../types"
 import { BadRequestError } from "../errors/BadRequestError"
 import { Post } from "../models/Post"
-import { PostDTO, InsertInputPostDTO, InsertInputCommentDTO, UpdateInputDTO, LikeDislikeDTO, GetAllPostsInputDTO, GetPostsInputDTO, DeleteInputPostDTO } from "../dtos/PostDTO"
+import { InsertInputPostDTO, InsertInputCommentDTO, UpdateInputDTO, LikeDislikeDTO, GetAllPostsInputDTO, GetPostsInputDTO, DeleteInputPostDTO } from "../dtos/PostDTO"
 import { IdGenerator } from "../services/IdGenerator"
 import { TokenManager } from "../services/TokenManager"
 
@@ -11,7 +11,6 @@ export class PostBusiness {
     constructor(
         private postDatabase: PostDatabase,
         private userDatabase: UserDatabase,
-        private postDTO: PostDTO,
         private idGenerator: IdGenerator,
         private tokenManager: TokenManager
     ){}
@@ -171,13 +170,17 @@ export class PostBusiness {
             {id:creator_id,
             username: payload.username,},
             {id: '',
-            creator_id: '',
             content: '',
             likes: 0,
             dislikes: 0,
             created_at: '',
             updated_at: '',
-            post_id: '',}
+            post_id: '',
+            creator:{
+                creator_id: '',
+                username: '',
+            }
+            }
             )
         
         const newPostDB = newPost.toDBModel()
@@ -239,13 +242,17 @@ export class PostBusiness {
             {id:creator_id,
             username: payload.username,},
             {id: '',
-            creator_id: '',
             content: '',
             likes: 0,
             dislikes: 0,
             created_at: '',
             updated_at: '',
-            post_id: filterPostById.id,}
+            post_id: filterPostById.id,
+            creator:{
+                creator_id: '',
+                username: '',
+            }
+            }
             )
         
         const postToUpdate = new Post(
@@ -261,13 +268,17 @@ export class PostBusiness {
                 username: ''
             },
             {id: '',
-            creator_id: '',
             content: '',
             likes: 0,
             dislikes: 0,
             created_at: '',
             updated_at: '',
-            post_id: '',}
+            post_id: '',
+            creator:{
+                creator_id: '',
+                username: '',
+            }
+            }
         )
 
         const newCommentDB = newComment.toDBCommentModel()
@@ -330,13 +341,17 @@ export class PostBusiness {
                 username: payload.username
             },
             {id: '',
-            creator_id: '',
             content: '',
             likes: 0,
             dislikes: 0,
             created_at: '',
             updated_at: '',
-            post_id: '',}
+            post_id: '',
+            creator:{
+                creator_id: '',
+                username: '',
+            }
+            }
         )
 
         const postToUpdateDB = postToUpdate.toDBModel()
@@ -387,15 +402,28 @@ export class PostBusiness {
 
         //Daniel: verifica se há alguma informação de 'curtida' da publicação dentro da tabela 'like-dislikes'
         const filterLikeDislikeDB = await this.postDatabase.getLikeDislikeByPostId(id)
+
+        if(filterLikeDislikeDB === undefined){
+            return
+        }
+
         if(filterLikeDislikeDB.length > 0){
             await this.postDatabase.deleteLikeDislike(id)
         }
 
         //Daniel: verifica se há algum comentário relacionado a publicação
         const filterCommentsDB = await this.postDatabase.getCommentsById(id)
+
+        if(filterCommentsDB === undefined){
+            return
+        }
+
         if(filterCommentsDB.length > 0){
             //Daniel: verifica se há alguma informação de 'curtida' do comentário dentro da tabela 'like-dislikes-comments'
             const filterLikeDislikeCommentDB = await this.postDatabase.getLikeDislikeByCommentId(filterCommentsDB[0].id)
+            if(filterLikeDislikeCommentDB === undefined){
+                return
+            }
             if(filterLikeDislikeCommentDB.length > 0){
                 await this.postDatabase.deleteLikeDislike(filterCommentsDB[0].id)
             }
@@ -461,13 +489,17 @@ export class PostBusiness {
                 {id: filterPostToLike.creator_id,
                 username: ""},
                 {id: '',
-                creator_id: '',
                 content: '',
                 likes: 0,
                 dislikes: 0,
                 created_at: '',
                 updated_at: '',
-                post_id: '',}
+                post_id: '',
+                creator:{
+                    creator_id: '',
+                    username: '',
+                }
+                }
             )
     
             const updateLikeDB = {
@@ -507,11 +539,12 @@ export class PostBusiness {
         }else{
             throw new BadRequestError("Informe um número válido. (1) like, (0) dislike")
         }
+        const comments = 0
 
         const commentToLike = new Post(
             id,
             filterCommentToLike.content,
-            filterCommentToLike.comments,
+            comments,
             likes,
             dislikes,
             filterCommentToLike.created_at,
@@ -519,13 +552,17 @@ export class PostBusiness {
             {id: filterCommentToLike.creator_id,
             username: ""},
             {id: '',
-            creator_id: '',
             content: '',
             likes: 0,
             dislikes: 0,
             created_at: '',
             updated_at: '',
-            post_id: '',}
+            post_id: '',
+            creator:{
+                creator_id: '',
+                username: '',
+            }
+            }
         )
 
         const updateLikeDB = {

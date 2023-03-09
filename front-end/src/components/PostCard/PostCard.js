@@ -22,7 +22,7 @@ function PostCard (props){
             }
             await axios.put(`${BASE_URL}/posts/${postId}/like`,body,{
                 headers:{
-                    Authorization:window.localStorage.getItem("TokenApi-Labeddite")
+                    Authorization:window.localStorage.getItem("TokenApi-Labeddit")
                 }})
             props.browserPosts()
         } catch (error) {
@@ -37,7 +37,7 @@ function PostCard (props){
             }
             await axios.put(`${BASE_URL}/posts/${postId}/like`,body,{
                 headers:{
-                    Authorization:window.localStorage.getItem("TokenApi-Labeddite")
+                    Authorization:window.localStorage.getItem("TokenApi-Labeddit")
                 }})
             props.browserPosts()
         } catch (error) {
@@ -45,7 +45,6 @@ function PostCard (props){
         }
     }
 
-    console.log("props",props)
     return(
         <article>
         <p className="subText">Enviado por: {props.post.creator.username}</p>

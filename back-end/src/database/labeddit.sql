@@ -73,3 +73,14 @@ VALUES("c001", "u002", "Parabéns! \o/", "p001"),
 DELETE FROM posts;
 
 UPDATE users SET role="ADMIN" WHERE ID = 'e5211187-9114-49dc-bb8e-42225b5bf8f9';
+
+SELECT comments_posts.id, 
+comments_posts.content,
+comments_posts.likes,
+comments_posts.dislikes,
+comments_posts.created_at,
+comments_posts.updated_at,
+users.id,
+users.username
+FROM comments_posts LEFT JOIN users
+ON users.id = comments_posts.creator_id;

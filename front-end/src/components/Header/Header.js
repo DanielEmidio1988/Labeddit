@@ -22,7 +22,7 @@ function Header() {
     const logOut = ()=>{
         context.setModal(false)
         context.setActionModal("")
-        context.setToken('')
+        localStorage.clear()
         goToLoginPage(navigate)
     }
 

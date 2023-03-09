@@ -37,6 +37,21 @@ export interface CommentDB{
     post_id: string,
 }
 
+//Daniel: interface para dados de comentário de publicação
+export interface CommentWithCreatorDB{
+    id: string,
+    content: string,
+    likes: number,
+    dislikes: number,
+    created_at: string,
+    updated_at: string,
+    post_id: string,
+    creator:{
+        creator_id: string,
+        username: string,
+    }
+}
+
 //Daniel: interface para dados de publicação, relacionando usuário que a criou
 export interface PostbyUsersDB{
     id: string,
@@ -65,7 +80,7 @@ export interface PostWithCommentsDB{
         id: string,
         username: string,
     },
-    comments_post: CommentDB,
+    comments_post: CommentWithCreatorDB,
 }
 
 //Daniel: interface para dados da tabela de like-dislikes de publicação
