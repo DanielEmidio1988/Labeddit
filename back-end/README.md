@@ -5,7 +5,7 @@
 API construida para o gerenciamento das informações da Base de Dados da aplicação do Labeddit, onde você pode manipular informações de cadastro de usuários e publicações.
 
 ## 🔗Link de Acesso
-- Surge: Em breve;  
+- Render: Em breve;  
 
 ### 📄Concepção do Projeto
 Documentação Postman: [clique aqui!]('https://documenter.getpostman.com/view/24460616/2s93JnUmbg')
@@ -19,6 +19,8 @@ Para este projeto, são modelados 5 entidades: USERS(usuários), POSTS(publicaç
 - likes_dislikes_comments: user_id, comments_id, likes;
 ![Preview](./src/assets/diagram.png)
 
+Ao todo, foram aplicados testes unitários em 70% da aplicação.
+![Preview](./src/assets/coverage.png)
 
 ### Endpoints
 - Get Users: Retorna todos os usuários cadastrados;

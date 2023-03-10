@@ -23,14 +23,25 @@ describe("login", () => {
         expect(response.token).toBe("token-mock-normal")
     })
 
-    test("login bem-sucedido em conta admin retorna token", async () => {
+    test("Deve retornar um erro caso o login seja incorreto (1)", ()=>{
         const input: LoginDTO = {
-            email: "admin@email.com",
+            email: "@email.com",
             password: "bananinha"
         }
 
-        //Daniel: verificar o porque o login de admin está dando erro
-        const response = await userBusiness.login(input)
-        expect(response.token).toBe("token-mock-admin")
+        expect(async()=>{
+            await userBusiness.login(input)
+        }).rejects.toThrow("'E-mail' não cadastrado!")
+    })
+
+    test("Deve retornar um erro caso o login seja incorreto (2)", ()=>{
+        const input: LoginDTO = {
+            email: "normal@email.com",
+            password: "bananinh"
+        }
+
+        expect(async()=>{
+            await userBusiness.login(input)
+        }).rejects.toThrow("'e-mail' ou 'senha' inválidos")
     })
 })

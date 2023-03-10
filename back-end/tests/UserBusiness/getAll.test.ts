@@ -18,4 +18,20 @@ describe("login", () => {
         const response = await userBusiness.getAllUsers(input)
         expect(response).toHaveLength(2)
     })
+
+    test("Deve retornar um erro caso o usuário não tenha perfil ADMIN", ()=>{
+        const input = {token: 'token-mock-normal', q: "id-mock" }
+
+        expect(async()=>{
+            await userBusiness.getAllUsers(input)
+        }).rejects.toThrow('Você não possui perfil para acessar este recurso!')
+    })
+
+    test("Deve retornar um erro caso o usuário não tenha perfil ADMIN", ()=>{
+        const input = {token: '', q: "id-mock" }
+
+        expect(async()=>{
+            await userBusiness.getAllUsers(input)
+        }).rejects.toThrow("'Token' não válido!")
+    })
 })

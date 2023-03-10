@@ -23,4 +23,16 @@ describe("signup", () => {
         const response = await userBusiness.signUp(input)
         expect(response.token).toBe("token-mock-normal")
     })
+
+    test("Deve retornar um erro caso o e-mail já esteja cadastrado", ()=>{
+        const input: SignUpDTO = {
+            email: "normal@email.com",
+            username: "Example Mock",
+            password: "bananinha"
+        }
+
+        expect(async()=>{
+            await userBusiness.signUp(input)
+        }).rejects.toThrow("'E-mail' já cadastrado em outra conta.")
+    })
 })

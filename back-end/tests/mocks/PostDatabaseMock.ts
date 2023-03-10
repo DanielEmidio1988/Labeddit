@@ -1,6 +1,5 @@
-import { PostDB, PostbyUsersDB, UserDB, CommentDB, LikeDislikeDB, LikeDislikeCommentDB, ROLE_USER } from "../../src/types"
+import { PostDB, CommentDB, LikeDislikeDB, LikeDislikeCommentDB, ROLE_USER } from "../../src/types"
 import { BaseDatabase } from "../../src/database/BaseDatabase"
-import { UserDatabaseMock } from "./UserDatabaseMock"
 
 export class PostDatabaseMock extends BaseDatabase{
     public static POSTS_TABLE = "posts"
@@ -17,8 +16,8 @@ export class PostDatabaseMock extends BaseDatabase{
                 comments: 0,
                 likes: 1,
                 dislikes: 1,
-                created_at: new Date().toISOString(),
-                updated_at: new Date().toISOString(),
+                created_at: expect.any(String),
+                updated_at: expect.any(String),
             },
             {
                 id: 'p002',
@@ -27,18 +26,31 @@ export class PostDatabaseMock extends BaseDatabase{
                 comments: 1,
                 likes: 0,
                 dislikes: 0,
-                created_at: new Date().toISOString(),
-                updated_at: new Date().toISOString(),
+                created_at: expect.any(String),
+                updated_at: expect.any(String),
             }
         ]
     }
 
     public getPostsWithCreator = async()=>{
         const postsDB = await this.getAllPosts()
-        const creatorsDB = await BaseDatabase
-        .connection(UserDatabaseMock.TABLE_USERS)
-        .select()
-
+        const creatorsDB = [{
+            id: "id-mock",
+            username: "Normal Mock",
+            email: "normal@email.com",
+            password: "hash-bananinha",
+            created_at: expect.any(String),
+            role: ROLE_USER.NORMAL
+        },
+        {
+            id: "id-mock",
+            username: "Admin Mock",
+            email: "admin@email.com",
+            password: "hash-bananinha",
+            created_at: expect.any(String),
+            role: ROLE_USER.ADMIN
+        }]
+        
         return{
             postsDB,
             creatorsDB,
@@ -46,16 +58,44 @@ export class PostDatabaseMock extends BaseDatabase{
     }
 
     public getPostWithComments = async(id:string)=>{
-        const postsDB = await BaseDatabase
-        .connection(PostDatabaseMock.POSTS_TABLE)
-        .select().where({id:id})
-        const creatorsDB = await BaseDatabase
-        .connection(UserDatabaseMock.TABLE_USERS)
-        .select()
-        const commentsDB = await BaseDatabase
-        .connection(PostDatabaseMock.COMMENTS_TABLE)
-        .select()
-
+        const postsDB = await this.getAllPosts()
+        const creatorsDB = [{
+            id: "id-mock",
+            username: "Normal Mock",
+            email: "normal@email.com",
+            password: "hash-bananinha",
+            created_at: expect.any(String),
+            role: ROLE_USER.NORMAL
+        },
+        {
+            id: "id-mock",
+            username: "Admin Mock",
+            email: "admin@email.com",
+            password: "hash-bananinha",
+            created_at: expect.any(String),
+            role: ROLE_USER.ADMIN
+        }]
+        const commentsDB = [{
+            id: 'c001',
+            creator_id: 'id-mock-1',
+            content: 'Comentário 1',
+            likes: 0,
+            dislikes: 0,
+            created_at: '2023-03-08T22:07:42.277Z',
+            updated_at: '2023-03-08T22:07:42.277Z',
+            post_id: 'p001'
+          },
+          {
+            id: 'c002',
+            creator_id: 'id-mock-2',
+            content: 'Comentário 2',
+            likes: 0,
+            dislikes: 0,
+            created_at: '2023-03-08T22:07:42.277Z',
+            updated_at: '2023-03-08T22:07:42.277Z',
+            post_id: 'p001'
+          }]
+       
         return{
             postsDB,
             creatorsDB,
@@ -64,6 +104,7 @@ export class PostDatabaseMock extends BaseDatabase{
     }
 
     public getPostById = async (id: string):Promise<PostDB | undefined>=>{
+        // console.log(id)
         if(id === 'p001'){
         return{
                 id: 'p001',
@@ -72,8 +113,8 @@ export class PostDatabaseMock extends BaseDatabase{
                 comments: 0,
                 likes: 1,
                 dislikes: 1,
-                created_at: new Date().toISOString(),
-                updated_at: new Date().toISOString(),
+                created_at: expect.any(String),
+                updated_at: expect.any(String),
             }
         }
     }
@@ -87,8 +128,8 @@ export class PostDatabaseMock extends BaseDatabase{
                     content: 'comentario1',
                     likes: 1,
                     dislikes: 1,
-                    created_at: new Date().toISOString(),
-                    updated_at: new Date().toISOString(),
+                    created_at: expect.any(String),
+                    updated_at: expect.any(String),
                     post_id: 'p001',
                 }
             }
@@ -104,8 +145,8 @@ export class PostDatabaseMock extends BaseDatabase{
                     comments: 0,
                     likes: 1,
                     dislikes: 1,
-                    created_at: new Date().toISOString(),
-                    updated_at: new Date().toISOString(),
+                    created_at: expect.any(String),
+                    updated_at: expect.any(String),
                 }]
             }
     }
