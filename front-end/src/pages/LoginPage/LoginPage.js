@@ -33,7 +33,7 @@ function LoginPage(){
 
             const response = await axios.post(`${BASE_URL}/users/login`, body)
             console.log("response", response)
-            context.setToken(response.data.token)
+            
             // const tokenlabedditapi = JSON.stringify(response.data.token)
             window.localStorage.setItem("TokenApi-Labeddit", response.data.token)
 

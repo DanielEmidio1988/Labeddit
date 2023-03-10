@@ -5,7 +5,7 @@
 API construida para o gerenciamento das informações da Base de Dados da aplicação do Labeddit, onde você pode manipular informações de cadastro de usuários e publicações.
 
 ## 🔗Link de Acesso
-- Render: Em breve;  
+- Render: [clique aqui!](https://labedditbackend.onrender.com) 
 
 ### 📄Concepção do Projeto
 Documentação Postman: [clique aqui!]('https://documenter.getpostman.com/view/24460616/2s93JnUmbg')
