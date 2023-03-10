@@ -2,14 +2,13 @@
 
 ## 📖 Introdução
 
-Descrição em Breve
+Este é um projeto Web Full Stack desenvolvido no Bootcamp Labenu, onde o usuário tem acesso a rede social Labeddit. Dentro da aplicação, você poderá criar seu cadastro e interagir com as publicações (curtir, comentar, editar) de outros usuários.
 
 ## 👥Equipe
 - DANIEL EMIDIO
 
 ## 🧭Status do Projeto
-- ⏳Em andamento (back-end): aplicando testes unitários
-- ⏳Em andamento (front-end): conexão back-end x front-end(90% ok), ajustes acessos a páginas da aplicação, documentação.
+- ⏳Concluido
 
 ## 💻Tecnologias 
 
