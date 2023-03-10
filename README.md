@@ -1,14 +1,39 @@
-# Labeddit
+# LABEDDIT - FRONT-END
 
 ## 📖 Introdução
 
-Este é um projeto Web Full Stack desenvolvido no Bootcamp Labenu, onde o usuário tem acesso a rede social Labeddit. Dentro da aplicação, você poderá criar seu cadastro e interagir com as publicações (curtir, comentar, editar) de outros usuários.
+Este é um projeto Web Full Stack desenvolvido no Bootcamp Labenu, dividido em 2 repositórios (Labeddit-BackEnd e Labeddit-FrontEnd), onde o usuário tem acesso a rede social Labeddit. Dentro da aplicação, você poderá criar seu cadastro e interagir com as publicações (curtir, comentar, editar) de outros usuários.
+
+A Aplicação Front-End que faz o consumo da API Labeddit. A partir dela, você poderá cadastrar sua conta, criar e interagir com as publicações. 
+O projeto é responsivo, respeitando a regra 'mobile-first'.
+
+## 🔗Link de Acesso
+- Deploy Render: [clique aqui!](https://labedditbackend.onrender.com) 
+- Labeddit-FrontEnd: [clique aqui!](https://github.com/DanielEmidio1988/Labeddit-BackEnd)
 
 ## 👥Equipe
 - DANIEL EMIDIO
 
-## 🧭Status do Projeto
-- ⏳Concluido
+## 🔗Link de Acesso
+- Vercel: Em breve;  
+- Back-End: 
+
+### 📄Concepção do Projeto
+
+Link FIGMA: [Clique aqui!](https://www.figma.com/file/Byakv89sjTqI6NG2NRAAKJ/Projeto-Integrador-Labeddit?node-id=0%3A1&t=haX9j5M0lHbjWnAr-0)
+
+
+### Bibliotecas utilizadas
+- styled-components: para estilização da página;
+- axios: para requisição de API;
+- react-router-react: para interação entre páginas;
+
+## 🛰Executando o Projeto
+- npm install: Instala todas as dependências listadas no package.json;
+- npm start: Inicia a aplicação
+
+## 💡Programas utilizados:
+- VSCode
 
 ## 💻Tecnologias 
 
@@ -18,11 +43,6 @@ Este é um projeto Web Full Stack desenvolvido no Bootcamp Labenu, onde o usuár
 ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
 ![React Router](https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white)
 ![Styled-Components](https://img.shields.io/badge/styled--components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white)
-![NodeJs](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)
-![Typescript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
-![SQLite](https://img.shields.io/badge/SQLite-07405E?style=for-the-badge&logo=sqlite&logoColor=white)
-![Jest](https://img.shields.io/badge/Jest-323330?style=for-the-badge&logo=Jest&logoColor=white)
-![Git](https://img.shields.io/badge/GIT-E44C30?style=for-the-badge&logo=git&logoColor=white)
 
 ## 📫 Contato
 
