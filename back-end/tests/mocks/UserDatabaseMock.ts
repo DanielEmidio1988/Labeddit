@@ -41,7 +41,7 @@ export class UserDatabaseMock extends BaseDatabase {
                     username: "Normal Mock",
                     email: "normal@email.com",
                     password: "hash-bananinha",
-                    created_at: new Date().toISOString(),
+                    created_at: expect.any(String),
                     role: ROLE_USER.NORMAL
                 }
             case "admin@email.com":
@@ -50,7 +50,7 @@ export class UserDatabaseMock extends BaseDatabase {
                     username: "Admin Mock",
                     email: "admin@email.com",
                     password: "hash-bananinha",
-                    created_at: new Date().toISOString(),
+                    created_at: expect.any(String),
                     role: ROLE_USER.ADMIN
                 }
             default:
@@ -66,7 +66,7 @@ export class UserDatabaseMock extends BaseDatabase {
                     username: "Normal Mock",
                     email: "normal@email.com",
                     password: "hash-bananinha",
-                    created_at: new Date().toISOString(),
+                    created_at: expect.any(String),
                     role: ROLE_USER.NORMAL
                 }
             case "admin@email.com":
@@ -75,7 +75,7 @@ export class UserDatabaseMock extends BaseDatabase {
                     username: "Admin Mock",
                     email: "admin@email.com",
                     password: "hash-bananinha",
-                    created_at: new Date().toISOString(),
+                    created_at: expect.any(String),
                     role: ROLE_USER.ADMIN
                 }
             default:
