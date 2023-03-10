@@ -8,15 +8,11 @@ A Aplicação Front-End que faz o consumo da API Labeddit. A partir dela, você 
 O projeto é responsivo, respeitando a regra 'mobile-first'.
 
 ## 🔗Link de Acesso
-- Deploy Render: [clique aqui!](https://labedditbackend.onrender.com) 
-- Labeddit-FrontEnd: [clique aqui!](https://github.com/DanielEmidio1988/Labeddit-BackEnd)
+- Deploy Vercel: [clique aqui!](https://labeddit-front-end.vercel.app/) 
+- Labeddit-BackEnd: [clique aqui!](https://github.com/DanielEmidio1988/Labeddit-BackEnd)
 
 ## 👥Equipe
 - DANIEL EMIDIO
-
-## 🔗Link de Acesso
-- Vercel: Em breve;  
-- Back-End: 
 
 ### 📄Concepção do Projeto
 
